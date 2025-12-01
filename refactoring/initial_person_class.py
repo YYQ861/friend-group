@@ -16,7 +16,8 @@ class Person:
 
     def forget(self, person):
         """Removes any connections to a person"""
-        pass
+        self.connections.pop(person, None)
+        person.connections.pop(self, None)
 
 
 def average_age(group):
@@ -26,15 +27,25 @@ def average_age(group):
 
 
 if __name__ == "__main__":
-    # ...then create the group members one by one...
     jill = Person("Jill", 26, "biologist")
+    zalika = Person("Zalika", 28, "artist")
+    john = Person("John", 27, "writer")
+    nash = Person("Nash", 34, "chef")
 
-    # ...then add the connections one by one...
     # Note: this will fail from here if the person objects aren't created
     jill.add_connection(zalika, "friend")
+    jill.add_connection(john, "partner")
+
+    zalika.add_connection(jill, "friend")
+
+    john.add_connection(jill, "partner")
+
+    nash.add_connection(john, "cousin")
+    nash.add_connection(zalika, "landlord")
 
     # ... then forget Nash and John's connection
     nash.forget(john)
+
     # Then create the group
     my_group = {jill, zalika, john, nash}
 
